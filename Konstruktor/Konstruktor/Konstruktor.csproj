@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{209D4B68-2E24-474B-9DD5-51A84FB44E19}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Konstruktor</RootNamespace>
+    <AssemblyName>Konstruktor</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BindingProxy.cs" />
+    <Compile Include="Controls\ConstructionView.xaml.cs">
+      <DependentUpon>ConstructionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CuboidControl.xaml.cs">
+      <DependentUpon>CuboidControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\CanvasSizeConverters\BoolToCanvasHeightConverter.cs" />
+    <Compile Include="Converters\CanvasSizeConverters\BoolToCanvasWidthConverter.cs" />
+    <Compile Include="Converters\CuboidPropertiesConverters\BoolToBorderThicknessConverter.cs" />
+    <Compile Include="Converters\CollectionToBoolConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverters\MultipleBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\CuboidDimensionsToStringConverter.cs" />
+    <Compile Include="Converters\CuboidPropertiesConverters\CuboidColorConverter.cs" />
+    <Compile Include="Converters\ViewToNameConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\BackViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\CuboidPropertiesConverters\CuboidAndViewToHeightConverter.cs" />
+    <Compile Include="Converters\CuboidPropertiesConverters\CuboidAndViewToPositionLeftConverter.cs" />
+    <Compile Include="Converters\CuboidPropertiesConverters\CuboidAndViewToPositionBottomConverter.cs" />
+    <Compile Include="Converters\CuboidPropertiesConverters\CuboidAndViewToWidthConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\FrontViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\InvertBackViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverters\InvertBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\InvertFrontViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\InvertLeftViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\InvertRightViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\InvertTopViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\LeftViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\RightViewToVisibilityConverter.cs" />
+    <Compile Include="Converters\ViewVisibilityConverters\TopViewToVisibilityConverter.cs" />
+    <Compile Include="DataHelpers\ActionObject.cs" />
+    <Compile Include="DataHelpers\ActionsHelper.cs" />
+    <Compile Include="DataHelpers\Cuboid.cs" />
+    <Compile Include="DataHelpers\CuboidsHelper.cs" />
+    <Compile Include="DataHelpers\DataObjectBase.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="Controls\ConstructionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CuboidControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,84 @@
+﻿<Border x:Class="Konstruktor.Controls.CuboidControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Konstruktor.Controls"
+             xmlns:converters="clr-namespace:Konstruktor.Converters"
+             mc:Ignorable="d" 
+             Name="cuboidControl"
+             BorderBrush="White"
+             BorderThickness="1" 
+             PreviewMouseLeftButtonDown="CuboidControl_PreviewMouseLeftButtonDown"
+             PreviewMouseMove="CuboidControl_PreviewMouseMove"
+             PreviewMouseLeftButtonUp="CuboidControl_PreviewMouseLeftButtonUp"
+             d:DesignHeight="40" d:DesignWidth="60">
+    <Border.Style>
+        <Style>
+            <Style.Triggers>
+                <Trigger Property="Border.IsMouseOver" Value="True">
+                    <Setter Property="Border.Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Border.Style>
+    <Border.Resources>
+        <converters:CuboidAndViewToWidthConverter x:Key="CuboidAndViewToWidthConverter"/>
+        <converters:CuboidAndViewToHeightConverter x:Key="CuboidAndViewToHeightConverter"/>
+        <converters:CuboidAndViewToPositionLeftConverter x:Key="CuboidAndViewToPositionLeftConverter"/>
+        <converters:CuboidAndViewToPositionBottomConverter x:Key="CuboidAndViewToPositionBottomConverter"/>
+        <converters:CuboidColorConverter x:Key="CuboidColorConverter"/>
+    </Border.Resources>
+    <Border.Width>
+        <MultiBinding Converter="{StaticResource CuboidAndViewToWidthConverter}">
+            <Binding Path="Cuboid" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="ViewDirection" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="FullSize" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.IsDragged" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+        </MultiBinding>
+    </Border.Width>
+    <Border.Height>
+        <MultiBinding Converter="{StaticResource CuboidAndViewToHeightConverter}">
+            <Binding Path="Cuboid" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="ViewDirection" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="FullSize" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.IsDragged" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+        </MultiBinding>
+    </Border.Height>
+    <Canvas.Left>
+        <MultiBinding Converter="{StaticResource CuboidAndViewToPositionLeftConverter}">
+            <Binding Path="Cuboid.Width" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Depth" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Height" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.X" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Y" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Z" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="ViewDirection" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="FullSize" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.FromSelection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.SelectId" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.IsDragged" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+        </MultiBinding>
+    </Canvas.Left>
+    <Canvas.Bottom>
+        <MultiBinding Converter="{StaticResource CuboidAndViewToPositionBottomConverter}">
+            <Binding Path="Cuboid.Width" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Depth" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Height" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.X" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Y" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.Z" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="ViewDirection" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="FullSize" Mode="OneWay" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.FromSelection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.SelectId" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.IsDragged" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+        </MultiBinding>
+    </Canvas.Bottom>
+    <Border.Background>
+        <MultiBinding Converter="{StaticResource CuboidColorConverter}">
+            <Binding Path="Cuboid.FromSelection" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+            <Binding Path="Cuboid.IsSelected" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" ElementName="cuboidControl"/>
+        </MultiBinding>
+    </Border.Background>
+</Border>

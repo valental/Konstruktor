@@ -1,0 +1,176 @@
+﻿<Window x:Class="Konstruktor.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:Konstruktor"
+        xmlns:vm="clr-namespace:Konstruktor.ViewModels"
+        xmlns:controls="clr-namespace:Konstruktor.Controls"
+        xmlns:converters="clr-namespace:Konstruktor.Converters"
+        mc:Ignorable="d"
+        WindowState="Maximized" ResizeMode="CanMinimize"
+        Title="Konstruktor" Height="800" Width="900">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <converters:TopViewToVisibilityConverter x:Key="TopViewToVisibilityConverter"/>
+        <converters:FrontViewToVisibilityConverter x:Key="FrontViewToVisibilityConverter"/>
+        <converters:BackViewToVisibilityConverter x:Key="BackViewToVisibilityConverter"/>
+        <converters:LeftViewToVisibilityConverter x:Key="LeftViewToVisibilityConverter"/>
+        <converters:RightViewToVisibilityConverter x:Key="RightViewToVisibilityConverter"/>
+
+        <converters:InvertTopViewToVisibilityConverter x:Key="InvertTopViewToVisibilityConverter"/>
+        <converters:InvertFrontViewToVisibilityConverter x:Key="InvertFrontViewToVisibilityConverter"/>
+        <converters:InvertBackViewToVisibilityConverter x:Key="InvertBackViewToVisibilityConverter"/>
+        <converters:InvertLeftViewToVisibilityConverter x:Key="InvertLeftViewToVisibilityConverter"/>
+        <converters:InvertRightViewToVisibilityConverter x:Key="InvertRightViewToVisibilityConverter"/>
+
+        <converters:ViewToNameConverter x:Key="ViewToNameConverter"/>
+        <converters:CollectionToBoolConverter x:Key="CollectionToBoolConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="110"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Column -->
+        <StackPanel Grid.Column="0" Margin="2" VerticalAlignment="Center">
+            <StackPanel Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource InvertTopViewToVisibilityConverter}}">
+                <TextBlock Text="Tlocrt" HorizontalAlignment="Center"/>
+                <controls:ConstructionView ViewDirection="TopView" Margin="2"
+                                           Cuboids="{Binding Cuboids, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource InvertFrontViewToVisibilityConverter}}">
+                <TextBlock Text="Nacrt:" HorizontalAlignment="Center"/>
+                <controls:ConstructionView ViewDirection="FrontView" Margin="2"
+                                           Cuboids="{Binding Cuboids, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource InvertBackViewToVisibilityConverter}}">
+                <TextBlock Text="Stražnji nacrt:" HorizontalAlignment="Center"/>
+                <controls:ConstructionView ViewDirection="BackView" Margin="2"
+                                           Cuboids="{Binding Cuboids, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource InvertLeftViewToVisibilityConverter}}">
+                <TextBlock Text="Lijevi bokocrt:" HorizontalAlignment="Center"/>
+                <controls:ConstructionView ViewDirection="LeftView" Margin="2"
+                                           Cuboids="{Binding Cuboids, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource InvertRightViewToVisibilityConverter}}">
+                <TextBlock Text="Desni bokocrt:" HorizontalAlignment="Center"/>
+                <controls:ConstructionView ViewDirection="RightView" Margin="2"
+                                           Cuboids="{Binding Cuboids, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Central Column -->
+        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="{Binding ActiveView, Mode=OneWay, Converter={StaticResource ViewToNameConverter}}"
+                           HorizontalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+                <controls:ConstructionView ViewDirection="TopView" Margin="2" FullSize="True" 
+                                       Cuboids="{Binding Cuboids, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       CuboidsSelection="{Binding CuboidsSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource TopViewToVisibilityConverter}}"
+                                       IsGridVisible="{Binding IsGridVisible, Mode=OneWay}"/>
+                <controls:ConstructionView ViewDirection="FrontView" Margin="2" FullSize="True"
+                                       Cuboids="{Binding Cuboids, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       CuboidsSelection="{Binding CuboidsSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource FrontViewToVisibilityConverter}}"
+                                       IsGridVisible="{Binding IsGridVisible, Mode=OneWay}"/>
+                <controls:ConstructionView ViewDirection="BackView" Margin="2" FullSize="True"
+                                       Cuboids="{Binding Cuboids, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       CuboidsSelection="{Binding CuboidsSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource BackViewToVisibilityConverter}}"
+                                       IsGridVisible="{Binding IsGridVisible, Mode=OneWay}"/>
+                <controls:ConstructionView ViewDirection="LeftView" Margin="2" FullSize="True"
+                                       Cuboids="{Binding Cuboids, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       CuboidsSelection="{Binding CuboidsSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource LeftViewToVisibilityConverter}}"
+                                       IsGridVisible="{Binding IsGridVisible, Mode=OneWay}"/>
+                <controls:ConstructionView ViewDirection="RightView" Margin="2" FullSize="True"
+                                       Cuboids="{Binding Cuboids, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       CuboidsSelection="{Binding CuboidsSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource RightViewToVisibilityConverter}}"
+                                       IsGridVisible="{Binding IsGridVisible, Mode=OneWay}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Right Column -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="2">
+                <Button Content="Spremi" Margin="2"
+                        Command="{Binding SaveCommand}"/>
+                <Button Content="Otvori" Margin="2"
+                        Command="{Binding LoadCommand}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="2">
+                <Button Content="Poništi" Margin="2" 
+                        IsEnabled="{Binding Actions.RecentActions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource CollectionToBoolConverter}}"
+                        Command="{Binding UndoActionCommand}"/>
+                <Button Content="Ponovo napravi" Margin="2"
+                        IsEnabled="{Binding Actions.UndoneActions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource CollectionToBoolConverter}}"
+                        Command="{Binding RedoActionCommand}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Margin="2">
+                <TextBlock Text="Aktivan pogled:" Margin="2"/>
+                <ComboBox SelectedValue="{Binding ActiveView, Mode=TwoWay}"
+                      ItemsSource="{Binding PossibleViews, Mode=OneWay}"
+                      SelectedValuePath="Key"
+                      DisplayMemberPath="Value"
+                      Margin="2"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Margin="2">
+                <Button Content="Ukloni najviše" Margin="2"
+                        Command="{Binding RemoveHighestCommand}"/>
+                <Button Content="Ukloni nivo" Margin="2"
+                        Command="{Binding RemoveTopLevelCommand}"/>
+                <CheckBox Content="Mreža" Margin="2" VerticalAlignment="Bottom"
+                          IsChecked="{Binding IsGridVisible}"/>
+            </StackPanel>
+            
+            <Grid Grid.Row="4" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Širina:" Grid.Row="0" Grid.Column="0" Margin="2" HorizontalAlignment="Right"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Margin="2"
+                              ItemsSource="{Binding PossibleSizes, Mode=OneWay}"
+                              SelectedItem="{Binding NewCuboidWidth, Mode=TwoWay}"/>
+                <TextBlock Text="Dubina:" Grid.Row="1" Grid.Column="0" Margin="2" HorizontalAlignment="Right"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" Margin="2"
+                              ItemsSource="{Binding PossibleSizes, Mode=OneWay}"
+                              SelectedItem="{Binding NewCuboidDepth, Mode=TwoWay}"/>
+                <TextBlock Text="Visina:" Grid.Row="2" Grid.Column="0" Margin="2" HorizontalAlignment="Right"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" Margin="2"
+                              ItemsSource="{Binding PossibleSizes, Mode=OneWay}"
+                              SelectedItem="{Binding NewCuboidHeight, Mode=TwoWay}"/>
+                <Button Content="Dodaj u izbor" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="2"
+                        Command="{Binding AddCuboidToSelectionCommand}"/>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
