@@ -97,6 +97,9 @@ namespace Konstruktor.Controls
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Draws everything inside canvas.
+        /// </summary>
         private void DisplayInControl()
         {
             int factor = FullSize ? Settings.LargeFactor : Settings.SmallFactor;

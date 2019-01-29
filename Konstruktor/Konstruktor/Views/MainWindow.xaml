@@ -42,7 +42,7 @@
         <!-- Left Column -->
         <StackPanel Grid.Column="0" Margin="2" VerticalAlignment="Center">
             <StackPanel Visibility="{Binding ActiveView, Mode=OneWay, Converter={StaticResource InvertTopViewToVisibilityConverter}}">
-                <TextBlock Text="Tlocrt" HorizontalAlignment="Center"/>
+                <TextBlock Text="Tlocrt:" HorizontalAlignment="Center"/>
                 <controls:ConstructionView ViewDirection="TopView" Margin="2"
                                            Cuboids="{Binding Cuboids, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
