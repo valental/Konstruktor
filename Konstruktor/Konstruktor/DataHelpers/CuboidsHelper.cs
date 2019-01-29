@@ -25,6 +25,9 @@ namespace Konstruktor.DataHelpers
 
         public static bool CheckIfCanBeAdded(ObservableCollection<Cuboid> cuboids, Cuboid cuboid)
         {
+            if (cuboid.X < 0 || cuboid.Y < 0 || cuboid.Z < 0)
+                return false;
+
             if ((cuboid.X + cuboid.Width > Settings.MaxSize) ||
                 (cuboid.Y + cuboid.Depth > Settings.MaxSize) ||
                 (cuboid.Z + cuboid.Height > Settings.MaxSize))

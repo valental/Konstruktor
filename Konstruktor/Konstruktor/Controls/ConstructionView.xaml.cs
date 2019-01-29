@@ -105,11 +105,13 @@ namespace Konstruktor.Controls
 
             MainCanvas.Children.Clear();
 
-            Border border = new Border();
-            border.Width = max * factor + 2;
-            border.Height = size;
-            border.BorderThickness = new Thickness(0, 0, 2, 0);
-            border.BorderBrush = Brushes.Black;
+            Border border = new Border
+            {
+                Width = max * factor + 2,
+                Height = size,
+                BorderThickness = new Thickness(0, 0, 2, 0),
+                BorderBrush = Brushes.Black
+            };
             MainCanvas.Children.Add(border);
 
             DisplayCuboids(Cuboids);
@@ -126,10 +128,12 @@ namespace Konstruktor.Controls
         {
             foreach (Cuboid cuboid in cuboids)
             {
-                CuboidControl cuboidControl = new CuboidControl();
-                cuboidControl.Cuboid = cuboid;
-                cuboidControl.ViewDirection = ViewDirection;
-                cuboidControl.FullSize = FullSize;
+                CuboidControl cuboidControl = new CuboidControl
+                {
+                    Cuboid = cuboid,
+                    ViewDirection = ViewDirection,
+                    FullSize = FullSize
+                };
                 Binding binding = new Binding("IsGridVisible")
                 {
                     ElementName = "konstruktor",
@@ -152,29 +156,29 @@ namespace Konstruktor.Controls
             for (int i = 0; i <= max; i++)
             {
                 #region Vertical Line
-                Line verticalLine = new Line();
-                verticalLine.Stroke = Brushes.Gray;
-
-                verticalLine.X1 = i * factor;
-                verticalLine.X2 = i * factor;
-                verticalLine.Y1 = 0;
-                verticalLine.Y2 = size;
-
-                verticalLine.StrokeThickness = 1;
+                Line verticalLine = new Line
+                {
+                    Stroke = Brushes.Gray,
+                    X1 = i * factor,
+                    X2 = i * factor,
+                    Y1 = 0,
+                    Y2 = size,
+                    StrokeThickness = 1
+                };
                 verticalLine.SetBinding(Line.VisibilityProperty, multiBinding);
                 MainCanvas.Children.Add(verticalLine);
                 #endregion
 
                 #region Horizontal Line
-                Line horizontalLine = new Line();
-                horizontalLine.Stroke = Brushes.Gray;
-
-                horizontalLine.X1 = 0;
-                horizontalLine.X2 = size;
-                horizontalLine.Y1 = i * factor;
-                horizontalLine.Y2 = i * factor;
-
-                horizontalLine.StrokeThickness = 1;
+                Line horizontalLine = new Line
+                {
+                    Stroke = Brushes.Gray,
+                    X1 = 0,
+                    X2 = size,
+                    Y1 = i * factor,
+                    Y2 = i * factor,
+                    StrokeThickness = 1
+                };
                 horizontalLine.SetBinding(Line.VisibilityProperty, multiBinding);
                 MainCanvas.Children.Add(horizontalLine);
                 #endregion
@@ -185,7 +189,11 @@ namespace Konstruktor.Controls
         {
             foreach (Cuboid cuboid in CuboidsSelection)
             {
-                TextBlock textBlock = new TextBlock();
+                TextBlock textBlock = new TextBlock
+                {
+                    VerticalAlignment = VerticalAlignment.Center,
+                    FontWeight = FontWeights.DemiBold
+                };
                 MultiBinding multiBinding = new MultiBinding()
                 {
                     Converter = new CuboidDimensionsToStringConverter()
@@ -197,13 +205,13 @@ namespace Konstruktor.Controls
 
                 int left = Settings.LargeFactor * (Settings.MaxSize + 2);
                 int top = 2 * Settings.LargeFactor * (cuboid.SelectId - 1);
-                textBlock.VerticalAlignment = VerticalAlignment.Center;
-                textBlock.FontWeight = FontWeights.DemiBold;
 
-                Border border = new Border();
-                border.Height = Settings.LargeFactor;
-                border.Margin = new Thickness(5, 0, 0, 0);
-                border.Child = textBlock;
+                Border border = new Border
+                {
+                    Height = Settings.LargeFactor,
+                    Margin = new Thickness(5, 0, 0, 0),
+                    Child = textBlock
+                };
                 Canvas.SetLeft(border, left);
                 Canvas.SetTop(border, top);
                 MainCanvas.Children.Add(border);
@@ -233,51 +241,51 @@ namespace Konstruktor.Controls
             int max = Settings.MaxSize;
             MainWindowViewModel vm = DataContext as MainWindowViewModel;
 
-            if (vm.SelectedCuboidId > 0)
+            if (vm.SelectedCuboidId <= 0)
+                return;
+
+            // Add
+            Cuboid selectedCuboid = vm.CuboidsSelection[vm.SelectedCuboidId - 1];
+            int x = 0;
+            int y = 0;
+            int z = 0;
+            int width = selectedCuboid.Width;
+            int depth = selectedCuboid.Depth;
+            int height = selectedCuboid.Height;
+
+            switch (ViewDirection)
             {
-                // Add
-                Cuboid selectedCuboid = vm.CuboidsSelection[vm.SelectedCuboidId - 1];
-                int x = 0;
-                int y = 0;
-                int z = 0;
-                int width = selectedCuboid.Width;
-                int depth = selectedCuboid.Depth;
-                int height = selectedCuboid.Height;
+                case ViewDirection.TopView:
+                    x = (int)firstCoordinate;
+                    y = max - depth - (int)secondCoordinate;
+                    z = CuboidsHelper.FindLastCoordinateForTopView(Cuboids, x, y);
+                    break;
+                case ViewDirection.FrontView:
+                    x = (int)firstCoordinate;
+                    z = max - height - (int)secondCoordinate;
+                    y = CuboidsHelper.FindLastCoordinateForFrontView(Cuboids, x, z) - depth;
+                    break;
+                case ViewDirection.BackView:
+                    x = max - width - (int)firstCoordinate;
+                    z = max - height - (int)secondCoordinate;
+                    y = CuboidsHelper.FindLastCoordinateForBackView(Cuboids, x, z);
+                    break;
+                case ViewDirection.LeftView:
+                    y = max - depth - (int)firstCoordinate;
+                    z = max - height - (int)secondCoordinate;
+                    x = CuboidsHelper.FindLastCoordinateForLeftView(Cuboids, y, z) - width;
+                    break;
+                case ViewDirection.RightView:
+                    y = (int)firstCoordinate;
+                    z = max - height - (int)secondCoordinate;
+                    x = CuboidsHelper.FindLastCoordinateForRightView(Cuboids, y, z);
+                    break;
+            }
 
-                switch (ViewDirection)
-                {
-                    case ViewDirection.TopView:
-                        x = (int)firstCoordinate;
-                        y = max - depth - (int)secondCoordinate;
-                        z = CuboidsHelper.FindLastCoordinateForTopView(Cuboids, x, y);
-                        break;
-                    case ViewDirection.FrontView:
-                        x = (int)firstCoordinate;
-                        z = max - height - (int)secondCoordinate;
-                        y = CuboidsHelper.FindLastCoordinateForFrontView(Cuboids, x, z) - depth;
-                        break;
-                    case ViewDirection.BackView:
-                        x = max - width - (int)firstCoordinate;
-                        z = max - height - (int)secondCoordinate;
-                        y = CuboidsHelper.FindLastCoordinateForBackView(Cuboids, x, z);
-                        break;
-                    case ViewDirection.LeftView:
-                        y = max - depth - (int)firstCoordinate;
-                        z = max - height - (int)secondCoordinate;
-                        x = CuboidsHelper.FindLastCoordinateForLeftView(Cuboids, y, z) - width;
-                        break;
-                    case ViewDirection.RightView:
-                        y = (int)firstCoordinate;
-                        z = max - height - (int)secondCoordinate;
-                        x = CuboidsHelper.FindLastCoordinateForRightView(Cuboids, y, z);
-                        break;
-                }
-
-                Cuboid newCuboid = new Cuboid(width, depth, height, x, y, z);
-                if (CuboidsHelper.CheckIfCanBeAdded(Cuboids, newCuboid))
-                {
-                    AddCuboid(newCuboid);
-                }
+            Cuboid newCuboid = new Cuboid(width, depth, height, x, y, z);
+            if (CuboidsHelper.CheckIfCanBeAdded(Cuboids, newCuboid))
+            {
+                AddCuboid(newCuboid);
             }
         }
 
